@@ -1,0 +1,9 @@
+node_modules
+.next
+.git
+.idea
+.claude
+out
+*.log
+.env*
+!.env.local.example

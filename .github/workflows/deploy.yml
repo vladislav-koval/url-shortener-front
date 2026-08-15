@@ -1,0 +1,27 @@
+name: Deploy
+
+# Ручной запуск — кнопка "Run workflow". Сборка образа уже произошла сама
+# (см. build.yml на каждый пуш в main) — этот workflow только идёт на сервер
+# и переключает контейнер на уже готовый образ :latest из GHCR.
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy to server
+    runs-on: ubuntu-latest
+    steps:
+      # docker-compose.yml/Caddyfile на сервере — собственность бэкенд-репы,
+      # она их и синкает. Этот workflow ничего не заливает, только дёргает
+      # уже лежащий на сервере compose-стек — пересоздаёт исключительно
+      # контейнер frontend, остальное не трогает.
+      - name: Pull and restart frontend
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          script: |
+            cd ${{ secrets.DEPLOY_PATH }}
+            docker compose pull frontend
+            docker compose up -d frontend
