@@ -1,0 +1,69 @@
+{
+  "metadata": {
+    "title": "shrtly — short links",
+    "description": "A fast link shortener with click analytics"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "login": "Sign in with Google",
+    "logout": "Sign out"
+  },
+  "theme": {
+    "toggle": "Toggle theme"
+  },
+  "language": {
+    "toggle": "Switch language"
+  },
+  "home": {
+    "badge": "Short links, nothing extra",
+    "titleLine1": "Long links,",
+    "titleAccent": "a few characters",
+    "subtitle": "Paste a URL, get a short link, and track clicks on it — simple, fast, no clutter.",
+    "features": {
+      "instant": {
+        "title": "Instant",
+        "description": "Paste a link and get a short code in a second, no sign-up required."
+      },
+      "stats": {
+        "title": "Click analytics",
+        "description": "Sign up and all your links get tied to your account with a click counter."
+      },
+      "free": {
+        "title": "Free",
+        "description": "Shorten as many links as you want — no fees, no hidden limits."
+      }
+    }
+  },
+  "shortenForm": {
+    "placeholder": "https://example.com/...",
+    "submit": "Shorten",
+    "linked": "linked"
+  },
+  "copyButton": {
+    "copy": "Copy",
+    "copied": "Copied"
+  },
+  "dashboard": {
+    "title": "Your links",
+    "subtitle": "Number of clicks for each short link.",
+    "missingUrlNotice": "The backend doesn't return the original URL for this list yet — showing only the short code and click count.",
+    "empty": "No links yet. Shorten your first one on the <link>home page</link>.",
+    "range": "{from}–{to} of {total}",
+    "prev": "Previous",
+    "next": "Next",
+    "anonymous": {
+      "title": "Sign in to see your stats",
+      "subtitle": "Sign in to link URLs to your account and see click counts for them.",
+      "cta": "Sign in with Google"
+    }
+  },
+  "api": {
+    "networkError": "Couldn't reach the server. Make sure the backend is running.",
+    "genericError": "Something went wrong, please try again."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "This page doesn't exist or has been moved.",
+    "backHome": "Back home"
+  }
+}

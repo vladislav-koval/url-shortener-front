@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f7f7fb;
+  --foreground: #12121a;
+  --surface: #ffffff;
+  --surface-border: #e6e6ef;
+  --muted: #6b6b7d;
+  --accent: #6d5ef8;
+  --accent-2: #22d3c9;
+  --accent-foreground: #ffffff;
+  --danger: #e5484d;
+  --success: #22c55e;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --background: #0a0a0f;
+    --foreground: #f2f2f7;
+    --surface: #131319;
+    --surface-border: #24242f;
+    --muted: #8f8fa3;
+    --accent: #8b7cf9;
+    --accent-2: #2dd9cd;
+    --accent-foreground: #0a0a0f;
+    --danger: #f87171;
+    --success: #4ade80;
+  }
+}
+
+:root[data-theme="dark"] {
+  --background: #0a0a0f;
+  --foreground: #f2f2f7;
+  --surface: #131319;
+  --surface-border: #24242f;
+  --muted: #8f8fa3;
+  --accent: #8b7cf9;
+  --accent-2: #2dd9cd;
+  --accent-foreground: #0a0a0f;
+  --danger: #f87171;
+  --success: #4ade80;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-border: var(--surface-border);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-danger: var(--danger);
+  --color-success: var(--success);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.bg-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in oklab, var(--foreground) 6%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--foreground) 6%, transparent) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.glow {
+  background: radial-gradient(
+    600px circle at 50% 0%,
+    color-mix(in oklab, var(--accent) 22%, transparent),
+    transparent 60%
+  );
+}
+
+::selection {
+  background: color-mix(in oklab, var(--accent) 35%, transparent);
+}
