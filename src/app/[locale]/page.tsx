@@ -18,14 +18,31 @@ export async function generateMetadata({
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
   const t = await getTranslations({ locale, namespace: "metadata" });
+  const url = `${SITE_URL}/${locale}`;
+  const ogLocale = locale === "ru" ? "ru_RU" : "en_US";
+
   return {
     title: t("title"),
     description: t("description"),
     alternates: {
-      canonical: `${SITE_URL}/${locale}`,
-      languages: Object.fromEntries(
-        routing.locales.map((l) => [l, `${SITE_URL}/${l}`])
-      ),
+      canonical: url,
+      languages: {
+        ...Object.fromEntries(routing.locales.map((l) => [l, `${SITE_URL}/${l}`])),
+        "x-default": `${SITE_URL}/${routing.defaultLocale}`,
+      },
+    },
+    openGraph: {
+      title: t("title"),
+      description: t("description"),
+      url,
+      siteName: "shrtly",
+      locale: ogLocale,
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: t("title"),
+      description: t("description"),
     },
   };
 }
@@ -69,9 +86,9 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
                 <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-lg bg-accent/10 text-accent">
                   <Icon className="h-4.5 w-4.5" />
                 </div>
-                <h3 className="text-sm font-semibold text-foreground">
+                <h2 className="text-sm font-semibold text-foreground">
                   {t(`features.${key}.title`)}
-                </h3>
+                </h2>
                 <p className="mt-1 text-sm leading-relaxed text-muted">
                   {t(`features.${key}.description`)}
                 </p>

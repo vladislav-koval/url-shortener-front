@@ -1,7 +1,8 @@
 {
   "metadata": {
-    "title": "shrtly — short links",
-    "description": "A fast link shortener with click analytics"
+    "title": "Free URL Shortener — shrtly",
+    "description": "Shorten long URLs for free and track clicks. A fast and simple URL shortener with no sign-up required.",
+    "ogImageAlt": "shrtly — URL shortener"
   },
   "nav": {
     "dashboard": "Dashboard",
@@ -16,8 +17,8 @@
   },
   "home": {
     "badge": "Short links, nothing extra",
-    "titleLine1": "Long links,",
-    "titleAccent": "a few characters",
+    "titleLine1": "Turn long links",
+    "titleAccent": "into short ones",
     "subtitle": "Paste a URL, get a short link, and track clicks on it — simple, fast, no clutter.",
     "features": {
       "instant": {
@@ -26,7 +27,7 @@
       },
       "stats": {
         "title": "Click analytics",
-        "description": "Sign up and all your links get tied to your account with a click counter."
+        "description": "Sign in to save your links and track clicks for each one."
       },
       "free": {
         "title": "Free",

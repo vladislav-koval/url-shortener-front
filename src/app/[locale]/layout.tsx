@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { AuthProvider } from "@/lib/auth-context";
 import { Header } from "@/components/header";
 import { routing } from "@/i18n/routing";
+import { SITE_URL } from "@/lib/config";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -19,6 +20,7 @@ export async function generateMetadata({
   if (!hasLocale(routing.locales, locale)) notFound();
   const t = await getTranslations({ locale, namespace: "metadata" });
   return {
+    metadataBase: new URL(SITE_URL),
     title: t("title"),
     description: t("description"),
   };
