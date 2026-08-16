@@ -73,7 +73,7 @@ export default async function Image({ params }: { params: Promise<{ locale: stri
             </svg>
           </div>
           <div style={{ display: "flex", fontSize: 64, fontWeight: 700, color: "#f2f2f7" }}>
-            shrtly
+            tiniq
           </div>
         </div>
 

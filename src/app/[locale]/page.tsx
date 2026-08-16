@@ -35,7 +35,7 @@ export async function generateMetadata({
       title: t("title"),
       description: t("description"),
       url,
-      siteName: "shrtly",
+      siteName: "tiniq",
       locale: ogLocale,
       type: "website",
     },

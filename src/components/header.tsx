@@ -25,7 +25,7 @@ export function Header() {
           <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-accent to-accent-2 text-accent-foreground shadow-[0_0_20px_-4px_var(--accent)]">
             <Link2 className="h-4 w-4" strokeWidth={2.5} />
           </span>
-          <span className="text-lg">shrtly</span>
+          <span className="text-lg">tiniq</span>
         </Link>
 
         <nav className="flex items-center gap-1.5 sm:gap-3">

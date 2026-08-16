@@ -29,7 +29,7 @@ const geistMono = Geist_Mono({
 // Фолбэк на случай, если сегмент [locale] невалиден (например /fr) и его
 // собственный generateMetadata не успевает отработать.
 export const metadata: Metadata = {
-  title: "shrtly",
+  title: "tiniq",
   description: "A fast link shortener with click analytics",
 };
 
