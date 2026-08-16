@@ -1,5 +1,10 @@
 import { API_BASE_URL } from "./config";
-import type { ApiErrorBody, ApiErrorDetail } from "./types";
+import type {
+  ApiErrorBody,
+  ApiErrorDetail,
+  ClicksPage,
+  CreateLinkResponse,
+} from "./types";
 
 export class ApiError extends Error {
   code: string;
@@ -15,12 +20,30 @@ export class ApiError extends Error {
   }
 }
 
+export function isInvalidArgument(err: unknown): err is ApiError {
+  return err instanceof ApiError && err.code === "invalid_argument";
+}
+
+type UnauthorizedListener = () => void;
+let onUnauthorized: UnauthorizedListener | null = null;
+
+// AuthProvider регистрирует сюда сброс статуса в anonymous. Так любой 401
+// от бэка (протухшая/отсутствующая сессия), с какой бы ручки он ни пришёл,
+// сразу отражается в глобальном auth-статусе, а не только там, где именно
+// этот запрос был сделан.
+export function setUnauthorizedHandler(listener: UnauthorizedListener | null) {
+  onUnauthorized = listener;
+}
+
 interface RequestOptions extends Omit<RequestInit, "body"> {
   params?: Record<string, string | number | undefined>;
   body?: unknown;
 }
 
-async function request<T>(path: string, options: RequestOptions = {}): Promise<T> {
+async function request<T>(
+  path: string,
+  options: RequestOptions = {},
+): Promise<T> {
   const { params, headers, body, ...rest } = options;
 
   const url = new URL(path, API_BASE_URL);
@@ -56,15 +79,25 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
     : undefined;
 
   if (!res.ok) {
-    throw new ApiError(res.status, data ?? { code: "unknown_error", message: "Unknown error" });
+    if (res.status === 401) onUnauthorized?.();
+    throw new ApiError(
+      res.status,
+      data ?? { code: "unknown_error", message: "Unknown error" },
+    );
   }
 
   return data as T;
 }
 
 export const api = {
-  get: <T>(path: string, options?: RequestOptions) =>
-    request<T>(path, { ...options, method: "GET" }),
-  post: <T>(path: string, body?: unknown, options?: RequestOptions) =>
-    request<T>(path, { ...options, method: "POST", body }),
+  getClicks: (params: { limit: number; offset: number }) =>
+    request<ClicksPage>("/api/v1/clicks", { method: "GET", params }),
+
+  createLink: (url: string) =>
+    request<CreateLinkResponse>("/api/v1/link", {
+      method: "POST",
+      body: { url },
+    }),
+
+  logout: () => request<void>("/api/v1/auth/logout", { method: "POST" }),
 };

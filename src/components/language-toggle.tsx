@@ -13,7 +13,10 @@ export function LanguageToggle() {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
-  const nextLocale = routing.locales[(routing.locales.indexOf(locale) + 1) % routing.locales.length];
+  const nextLocale =
+    routing.locales[
+      (routing.locales.indexOf(locale) + 1) % routing.locales.length
+    ];
 
   const handleClick = () => {
     startTransition(() => {
@@ -28,7 +31,7 @@ export function LanguageToggle() {
       disabled={isPending}
       aria-label={`${t("toggle")}: ${nextLocale.toUpperCase()}`}
       title={`${t("toggle")}: ${nextLocale.toUpperCase()}`}
-      className="flex h-9 items-center gap-1.5 rounded-full border border-surface-border bg-surface px-3 text-sm font-semibold text-foreground transition-colors hover:border-accent hover:text-accent disabled:opacity-60"
+      className="flex h-9 items-center gap-1.5 rounded-full border border-surface-border bg-surface px-3 text-sm font-semibold text-foreground transition-colors hover:border-accent hover:text-accent disabled:opacity-60 cursor-pointer"
     >
       <Languages className="h-4 w-4" />
       {nextLocale.toUpperCase()}

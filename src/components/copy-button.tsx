@@ -4,7 +4,13 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Check, Copy } from "lucide-react";
 
-export function CopyButton({ value, className = "" }: { value: string; className?: string }) {
+export function CopyButton({
+  value,
+  className = "",
+}: {
+  value: string;
+  className?: string;
+}) {
   const t = useTranslations("copyButton");
   const [copied, setCopied] = useState(false);
 
@@ -22,7 +28,7 @@ export function CopyButton({ value, className = "" }: { value: string; className
     <button
       type="button"
       onClick={handleCopy}
-      className={`inline-flex items-center gap-1.5 rounded-lg border border-surface-border px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-surface ${className}`}
+      className={`inline-flex items-center gap-1.5 rounded-lg border border-surface-border px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-surface cursor-pointer ${className}`}
     >
       {copied ? (
         <>

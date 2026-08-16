@@ -13,7 +13,9 @@ export function ThemeToggle() {
   useEffect(() => {
     // Синхронизация с внешней системой (DOM-атрибутом, выставленным инлайн-скриптом
     // до гидратации) — легитимный случай для react-hooks/set-state-in-effect.
-    const current = document.documentElement.getAttribute("data-theme") as Theme | null;
+    const current = document.documentElement.getAttribute(
+      "data-theme",
+    ) as Theme | null;
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setTheme(current ?? "light");
   }, []);
@@ -31,7 +33,7 @@ export function ThemeToggle() {
       onClick={toggle}
       aria-label={t("toggle")}
       title={t("toggle")}
-      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-surface-border bg-surface text-foreground transition-colors hover:border-accent hover:text-accent"
+      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-surface-border bg-surface text-foreground transition-colors hover:border-accent hover:text-accent cursor-pointer"
     >
       {theme === null ? null : theme === "dark" ? (
         <Sun className="h-4 w-4" />

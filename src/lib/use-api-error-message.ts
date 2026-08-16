@@ -2,20 +2,40 @@ import { useCallback } from "react";
 import { useTranslations } from "next-intl";
 import { ApiError } from "@/lib/api";
 
-const CLIENT_ERROR_CODES = new Set(["network_error", "unknown_error"]);
-
 export function useApiErrorMessage() {
   const t = useTranslations("api");
 
   return useCallback(
     (err: unknown): string => {
-      if (err instanceof ApiError) {
-        if (err.code === "network_error") return t("networkError");
-        if (CLIENT_ERROR_CODES.has(err.code)) return t("genericError");
-        return err.message;
+      if (!(err instanceof ApiError)) {
+        return t("genericError");
       }
-      return t("genericError");
+
+      switch (err.code) {
+        case "network_error":
+          return t("networkError");
+
+        case "unauthenticated":
+          return t("unauthenticated");
+
+        case "unauthorized":
+          return t("forbidden");
+
+        case "not_found":
+          return t("notFound");
+
+        case "conflict":
+          return t("conflict");
+
+        case "invalid_argument":
+          return t("invalidArgument");
+
+        case "internal_error":
+        case "unknown_error":
+        default:
+          return t("genericError");
+      }
     },
-    [t]
+    [t],
   );
 }
