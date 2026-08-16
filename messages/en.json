@@ -38,7 +38,9 @@
   "shortenForm": {
     "placeholder": "https://example.com/...",
     "submit": "Shorten",
-    "linked": "linked"
+    "linked": "linked",
+    "invalidUrl": "This link can't be shortened. Check the address and try again.",
+    "urlTooLong": "This link is too long (max {max} characters)."
   },
   "copyButton": {
     "copy": "Copy",
@@ -47,7 +49,7 @@
   "dashboard": {
     "title": "Your links",
     "subtitle": "Number of clicks for each short link.",
-    "missingUrlNotice": "The backend doesn't return the original URL for this list yet — showing only the short code and click count.",
+    "missingUrlNotice": "The original URL is currently unavailable. Showing the short link and click count instead.",
     "empty": "No links yet. Shorten your first one on the <link>home page</link>.",
     "range": "{from}–{to} of {total}",
     "prev": "Previous",
@@ -59,8 +61,13 @@
     }
   },
   "api": {
-    "networkError": "Couldn't reach the server. Make sure the backend is running.",
-    "genericError": "Something went wrong, please try again."
+    "networkError": "Couldn't reach the service. Please try again.",
+    "genericError": "Something went wrong. Please try again.",
+    "unauthenticated": "Sign in to continue.",
+    "forbidden": "You don't have permission to perform this action.",
+    "notFound": "The requested data could not be found.",
+    "conflict": "The action couldn't be completed because of a data conflict.",
+    "invalidArgument": "Please check the entered data."
   },
   "notFound": {
     "title": "Page not found",

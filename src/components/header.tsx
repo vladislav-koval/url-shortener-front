@@ -21,7 +21,10 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-surface-border/80 bg-background/70 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-4 sm:px-6">
-        <Link href="/" className="flex items-center gap-2 font-semibold tracking-tight">
+        <Link
+          href="/"
+          className="flex items-center gap-2 font-semibold tracking-tight"
+        >
           <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-accent to-accent-2 text-accent-foreground shadow-[0_0_20px_-4px_var(--accent)]">
             <Link2 className="h-4 w-4" strokeWidth={2.5} />
           </span>
@@ -41,10 +44,6 @@ export function Header() {
             <span className="hidden sm:inline">{t("dashboard")}</span>
           </Link>
 
-          {status === "loading" && (
-            <div className="h-9 w-28 animate-pulse rounded-full bg-surface" />
-          )}
-
           {status === "anonymous" && (
             <a
               href={loginUrl}
@@ -58,7 +57,7 @@ export function Header() {
           {status === "authenticated" && (
             <button
               onClick={handleLogout}
-              className="flex items-center gap-1.5 rounded-full border border-surface-border px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-surface"
+              className="flex items-center gap-1.5 rounded-full border border-surface-border px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-surface cursor-pointer"
             >
               <LogOut className="h-4 w-4" />
               {t("logout")}

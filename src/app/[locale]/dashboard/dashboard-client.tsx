@@ -41,7 +41,7 @@ export function DashboardClient() {
     setError(null);
 
     api
-      .get<ClicksPage>("/api/v1/clicks", { params: { limit: PAGE_SIZE, offset } })
+      .getClicks({ limit: PAGE_SIZE, offset })
       .then((result) => {
         if (cancelled) return;
         setPage(result);
@@ -58,22 +58,15 @@ export function DashboardClient() {
     };
   }, [status, offset, getApiErrorMessage]);
 
-  if (status === "loading") {
-    return (
-      <div className="mx-auto w-full max-w-3xl flex-1 px-4 py-16 sm:px-6">
-        <div className="h-8 w-48 animate-pulse rounded-lg bg-surface" />
-        <div className="mt-6 h-40 animate-pulse rounded-2xl bg-surface" />
-      </div>
-    );
-  }
-
   if (status === "anonymous") {
     return (
       <div className="mx-auto flex w-full max-w-3xl flex-1 flex-col items-center justify-center px-4 py-24 text-center sm:px-6">
         <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-accent/10 text-accent">
           <MousePointerClick className="h-6 w-6" />
         </div>
-        <h1 className="text-2xl font-semibold tracking-tight">{t("anonymous.title")}</h1>
+        <h1 className="text-2xl font-semibold tracking-tight">
+          {t("anonymous.title")}
+        </h1>
         <p className="mt-2 max-w-sm text-muted">{t("anonymous.subtitle")}</p>
         <a
           href={loginUrl}
@@ -122,7 +115,10 @@ export function DashboardClient() {
           <div className="px-5 py-12 text-center text-sm text-muted">
             {t.rich("empty", {
               link: (chunks) => (
-                <Link href="/" className="font-medium text-accent hover:underline">
+                <Link
+                  href="/"
+                  className="font-medium text-accent hover:underline"
+                >
                   {chunks}
                 </Link>
               ),

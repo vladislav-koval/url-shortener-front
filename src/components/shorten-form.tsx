@@ -3,11 +3,12 @@
 import { useState, type FormEvent } from "react";
 import { useTranslations } from "next-intl";
 import { ExternalLink, Loader2, Sparkles, User } from "lucide-react";
-import { api } from "@/lib/api";
+import { api, isInvalidArgument } from "@/lib/api";
 import { API_BASE_URL } from "@/lib/config";
 import type { CreateLinkResponse } from "@/lib/types";
 import { CopyButton } from "@/components/copy-button";
 import { useApiErrorMessage } from "@/lib/use-api-error-message";
+import { isValidHttpUrl, MAX_URL_LENGTH } from "@/lib/validate-url";
 
 export function ShortenForm() {
   const t = useTranslations("shortenForm");
@@ -19,17 +20,29 @@ export function ShortenForm() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!url.trim()) return;
+    const trimmed = url.trim();
+    if (!trimmed) return;
+
+    if (trimmed.length > MAX_URL_LENGTH) {
+      setError(t("urlTooLong", { max: MAX_URL_LENGTH }));
+      return;
+    }
+    if (!isValidHttpUrl(trimmed)) {
+      setError(t("invalidUrl"));
+      return;
+    }
 
     setLoading(true);
     setError(null);
 
     try {
-      const result = await api.post<CreateLinkResponse>("/api/v1/link", { url: url.trim() });
+      const result = await api.createLink(trimmed);
       setHistory((prev) => [result, ...prev]);
       setUrl("");
     } catch (err) {
-      setError(getApiErrorMessage(err));
+      // На /link единственный аргумент — url, так что invalid_argument
+      // здесь всегда про него.
+      setError(isInvalidArgument(err) ? t("invalidUrl") : getApiErrorMessage(err));
     } finally {
       setLoading(false);
     }
@@ -54,7 +67,7 @@ export function ShortenForm() {
         <button
           type="submit"
           disabled={loading || !url.trim()}
-          className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-accent to-accent-2 px-6 py-3.5 text-sm font-semibold text-accent-foreground transition-transform hover:scale-[1.02] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
+          className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-accent to-accent-2 px-6 py-3.5 text-sm font-semibold text-accent-foreground transition-transform hover:scale-[1.02] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100 cursor-pointer"
         >
           {loading ? (
             <Loader2 className="h-4 w-4 animate-spin" />
@@ -98,9 +111,14 @@ export function ShortenForm() {
                       </span>
                     )}
                   </div>
-                  <p className="mt-1 truncate text-sm text-muted">{item.original_url}</p>
+                  <p className="mt-1 truncate text-sm text-muted">
+                    {item.original_url}
+                  </p>
                 </div>
-                <CopyButton value={shortUrl} className="shrink-0 self-start sm:self-auto" />
+                <CopyButton
+                  value={shortUrl}
+                  className="shrink-0 self-start sm:self-auto"
+                />
               </li>
             );
           })}

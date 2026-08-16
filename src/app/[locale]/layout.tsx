@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
+import { cookies } from "next/headers";
 import { AuthProvider } from "@/lib/auth-context";
 import { Header } from "@/components/header";
 import { routing } from "@/i18n/routing";
@@ -33,9 +34,12 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
   }
   setRequestLocale(locale);
 
+  const cookieStore = await cookies();
+  const initialStatus = cookieStore.has("session_token") ? "authenticated" : "anonymous";
+
   return (
     <NextIntlClientProvider>
-      <AuthProvider>
+      <AuthProvider initialStatus={initialStatus}>
         <Header />
         <main className="flex flex-1 flex-col">{children}</main>
       </AuthProvider>
