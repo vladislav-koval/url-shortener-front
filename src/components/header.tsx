@@ -46,6 +46,9 @@ export function Header() {
             <span className="hidden sm:inline">{t("dashboard")}</span>
           </Link>
 
+          <LanguageToggle />
+          <ThemeToggle />
+
           {status === "anonymous" && (
             <a
               href={loginUrl}
@@ -68,9 +71,6 @@ export function Header() {
               {t("logout")}
             </button>
           )}
-
-          <LanguageToggle />
-          <ThemeToggle />
         </nav>
       </div>
     </header>
