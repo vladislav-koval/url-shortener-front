@@ -7,6 +7,7 @@
   "nav": {
     "dashboard": "Dashboard",
     "login": "Sign in with Google",
+    "loginShort": "Sign in",
     "logout": "Sign out"
   },
   "theme": {

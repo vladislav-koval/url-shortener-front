@@ -2,10 +2,11 @@
 
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
-import { Link2, LayoutDashboard, LogOut, LogIn } from "lucide-react";
+import { Link2, LayoutDashboard, LogOut } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageToggle } from "@/components/language-toggle";
+import { GoogleIcon } from "@/components/icons/google-icon";
 
 export function Header() {
   const { status, logout, loginUrl } = useAuth();
@@ -34,6 +35,7 @@ export function Header() {
         <nav className="flex items-center gap-1.5 sm:gap-3">
           <Link
             href="/dashboard"
+            aria-label={t("dashboard")}
             className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium transition-colors ${
               pathname === "/dashboard"
                 ? "bg-surface text-foreground"
@@ -49,8 +51,11 @@ export function Header() {
               href={loginUrl}
               className="flex items-center gap-1.5 rounded-full bg-gradient-to-br from-accent to-accent-2 px-4 py-2 text-sm font-medium text-accent-foreground shadow-sm transition-transform hover:scale-[1.03] active:scale-[0.98]"
             >
-              <LogIn className="h-4 w-4" />
-              {t("login")}
+              <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-white">
+                <GoogleIcon className="h-3 w-3" />
+              </span>
+              <span className="sm:hidden">{t("loginShort")}</span>
+              <span className="hidden sm:inline">{t("login")}</span>
             </a>
           )}
 
