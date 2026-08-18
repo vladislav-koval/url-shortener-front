@@ -1,7 +1,10 @@
 import createMiddleware from "next-intl/middleware";
 import { routing } from "./i18n/routing";
 
-export default createMiddleware(routing);
+// alternateLinks: false — next-intl иначе сам добавляет HTTP Link-заголовок
+// с x-default на "голый" путь без локали (/), что конфликтует с sitemap.ts
+// и generateMetadata, где x-default осознанно указывает на /ru.
+export default createMiddleware({ ...routing, alternateLinks: false });
 
 export const config = {
   // Точечно исключаем только реальные статические роуты, а не любой путь
