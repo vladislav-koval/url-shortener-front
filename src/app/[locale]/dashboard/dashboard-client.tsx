@@ -16,6 +16,7 @@ import { api } from "@/lib/api";
 import { API_BASE_URL } from "@/lib/config";
 import type { ClicksPage } from "@/lib/types";
 import { CopyButton } from "@/components/copy-button";
+import { QrPopover } from "@/components/qr/qr-popover";
 import { useApiErrorMessage } from "@/lib/use-api-error-message";
 import { Link } from "@/i18n/navigation";
 
@@ -151,6 +152,7 @@ export function DashboardClient() {
                       <MousePointerClick className="h-3 w-3" />
                       {item.click_count}
                     </span>
+                    <QrPopover value={shortUrl} fileName={item.short_code} />
                     <CopyButton value={shortUrl} />
                   </div>
                 </li>

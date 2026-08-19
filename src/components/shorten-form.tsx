@@ -7,6 +7,7 @@ import { api, isInvalidArgument } from "@/lib/api";
 import { API_BASE_URL } from "@/lib/config";
 import type { CreateLinkResponse } from "@/lib/types";
 import { CopyButton } from "@/components/copy-button";
+import { QrPopover } from "@/components/qr/qr-popover";
 import { useApiErrorMessage } from "@/lib/use-api-error-message";
 import { isValidHttpUrl, MAX_URL_LENGTH } from "@/lib/validate-url";
 
@@ -115,10 +116,10 @@ export function ShortenForm() {
                     {item.original_url}
                   </p>
                 </div>
-                <CopyButton
-                  value={shortUrl}
-                  className="shrink-0 self-start sm:self-auto"
-                />
+                <div className="flex shrink-0 items-center gap-2 self-start sm:self-auto">
+                  <QrPopover value={shortUrl} fileName={item.short_code} />
+                  <CopyButton value={shortUrl} />
+                </div>
               </li>
             );
           })}

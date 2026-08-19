@@ -47,6 +47,15 @@
     "copy": "Copy",
     "copied": "Copied"
   },
+  "qr": {
+    "button": "QR",
+    "copy": "Copy QR",
+    "copied": "Copied",
+    "copyError": "Couldn't copy",
+    "download": "Download",
+    "customize": "Customize QR →",
+    "customizeSoon": "Coming soon"
+  },
   "dashboard": {
     "title": "Your links",
     "subtitle": "Number of clicks for each short link.",
